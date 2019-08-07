@@ -71,11 +71,24 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base {
 			]
 		);
 
-		// Switcher control example
-		$this->add_control(
-			'show_slide_arrow',
+
+		$this->end_controls_section();
+
+
+		/************* Slider settings  ********* */
+
+		$this->start_controls_section(
+			'slider_settings',
 			[
-				'label' => __( 'Show Slide Arrow', 'elementor-custom-widgets' ),
+				'label' => __( 'Slider Settings', 'elementor-custom-widgets' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'arrows',
+			[
+				'label' => __( 'Show Slide Arrows', 'elementor-custom-widgets' ),
 				'type' => \Elementor\Controls_Manager::SWITCHER,
 				'label_on' => __( 'Show', 'elementor-custom-widgets' ),
 				'label_off' => __( 'Hide', 'elementor-custom-widgets' ),
@@ -83,16 +96,30 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base {
 				'default' => 'yes',
 			]
 		);
+
 		$this->add_control(
-			'custom_title',
+			'dots',
 			[
-				'label' => __( 'Title', 'elementor-custom-widgets' ),
-				'type' => \Elementor\Controls_Manager::TEXT,
+				'label' => __( 'Show Slide Dots', 'elementor-custom-widgets' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Show', 'elementor-custom-widgets' ),
+				'label_off' => __( 'Hide', 'elementor-custom-widgets' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
 			]
 		);
 
-
-
+		$this->add_control(
+			'drugable',
+			[
+				'label' => __( 'Dgrugable?', 'elementor-custom-widgets' ),
+				'type' => \Elementor\Controls_Manager::SWITCHER,
+				'label_on' => __( 'Show', 'elementor-custom-widgets' ),
+				'label_off' => __( 'Hide', 'elementor-custom-widgets' ),
+				'return_value' => 'yes',
+				'default' => 'yes',
+			]
+		);
 
 		$this->end_controls_section();
 
@@ -106,18 +133,39 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base {
 
 		if($settings['slides']){
 
-
 			$dynamic_id = rand(24568,96325);
+
 			if(count($settings['slides']) > 1){
+
+				if('yes' == $settings['arrows']){
+					$arrows = 'true';
+				} else{
+					$arrows = 'false';
+				}
+
+				if('yes' == $settings['dots']){
+					$dots = 'true';
+				} else{
+					$dots = 'false';
+				}
+				if('yes' == $settings['drugable']){
+					$drugable = 'true';
+				} else{
+					$drugable = 'false';
+				}
+
 				echo '<script>
 					jQuery(document).ready(function($){
 						$("#slider-elements-'.$dynamic_id.'").slick({
-							dots: true,
+							dots: '.$dots.',
+							arrows: '.$arrows.',
 							prevArrow: "<i class=\'fas fa-chevron-circle-left\'></i>",
 							nextArrow: "<i class=\'fas fa-chevron-circle-right\'></i>",
 							autoplay: true,
 							autoplaySpeed: 3000,
-							draggable: true,
+							draggable: '.$drugable.',
+							fade: false,
+						
 						
 						});
 					});
@@ -144,10 +192,6 @@ class Elementor_Slider_Widget extends \Elementor\Widget_Base {
 				}
 
 			echo '</div>';
-		}
-
-		if ( 'yes' === $settings['show_slide_arrow'] ) {
-			echo '<h2>' . $settings['custom_title'] . '</h2>';
 		}
 
 

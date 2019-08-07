@@ -35,7 +35,6 @@ define("ELE_ASSETS_ADMIN_DIR", plugin_dir_url(__FILE__)."/assets/admin");
     function laod_front_assets(){
 		wp_enqueue_style('slick-css', ELE_ASSETS_PUBLIC_DIR."/css/slick.css");
 		wp_enqueue_style('slick-css', ELE_ASSETS_PUBLIC_DIR."/css/slick-theme.css");
-		wp_enqueue_style('main-css', ELE_ASSETS_PUBLIC_DIR."/css/main.css");
 
         wp_enqueue_script( 'slick-js', ELE_ASSETS_PUBLIC_DIR."/js/slick.min.js", array('jquery'),$this->version, true );
     }
@@ -114,6 +113,15 @@ final class Elementor_Test_Extension {
 		// Add Plugin actions
 		add_action( 'elementor/widgets/widgets_registered', [ $this, 'init_widgets' ] );
 		//add_action( 'elementor/controls/controls_registered', [ $this, 'init_controls' ] );
+
+		// Register Widget Styles
+		add_action( 'elementor/frontend/after_enqueue_styles', [ $this, 'widget_styles' ] );
+	}
+
+	public function widget_styles() {
+
+		wp_enqueue_style( 'slider', plugins_url( 'assets/public/css/slider.css', __FILE__ ) );
+
 	}
 
 
