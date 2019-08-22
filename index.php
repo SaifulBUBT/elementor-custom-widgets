@@ -121,6 +121,7 @@ final class Elementor_Test_Extension {
 	public function widget_styles() {
 
 		wp_enqueue_style( 'slider', plugins_url( 'assets/public/css/slider.css', __FILE__ ) );
+		wp_enqueue_style( 'contentBlock', plugins_url( 'assets/public/css/content-block.css', __FILE__ ) );
 
 	}
 
@@ -179,10 +180,14 @@ final class Elementor_Test_Extension {
 		// Include Widget files
 		require_once( __DIR__ . '/widgets/test-widget.php' );
 		require_once( __DIR__ . '/widgets/slider-widget.php' );
+		require_once( __DIR__ . '/widgets/content-block.php' );
+		require_once( __DIR__ . '/widgets/elementor-products.php' );
 
 		// Register widget
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \Elementor_oEmbed_Widget() );
 		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \Elementor_Slider_Widget() );
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \Elementor_contentBlock_Widget() );
+		\Elementor\Plugin::instance()->widgets_manager->register_widget_type( new \Elementor_Products_Widget() );
 
 	}
 
